@@ -1,7 +1,3 @@
-Let's gooo BB! Day 1, fresh slate, mixed mode. Perfect. 🎯
-
----
-
 # Day 1 — Interfaces: implicit, small, composable
 
 ## 🧠 Why interfaces *first*?
@@ -272,5 +268,3 @@ Before we move on, can you answer these in your own words?
 1. Why doesn't Go need an `implements` keyword?
 2. What's the risk of a 10-method interface vs a 1-method interface?
 3. Why does `Populate` take `Storer` instead of `*MemCache`?
-
-No pressure to be perfect — just tell me what your mental model is and I'll sharpen it. 🧠
