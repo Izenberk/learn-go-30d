@@ -256,6 +256,32 @@ Or use the `goleak` package by Uber — it does this automatically at test teard
 
 ---
 
+## 🧪 Test results — proving the theory
+
+```
+=== RUN   TestLeakyGoroutine
+    main_test.go:19: goroutine leak: before=2 after=3  ← FAIL ✅ (expected)
+--- FAIL: TestLeakyGoroutine (0.01s)
+
+=== RUN   TestCleanGoroutine
+goroutine exiting cleanly                              ← ctx.Done() fired
+--- PASS: TestCleanGoroutine (0.01s)                   ← PASS ✅ (expected)
+```
+
+### Reading the numbers
+
+```
+before=2   ← main goroutine + go test runtime goroutine
+after=3    ← +1 leaked goroutine, stuck on <-ch forever
+delta=+1   ← exactly one leak, exactly where we expected it
+```
+
+**`TestLeakyGoroutine` — FAIL is the correct outcome.** `before=2` → `after=3` means one goroutine leaked. The `2` at start isn't `1` because Go's test runner itself spawns a background goroutine. The delta `+1` is the leaked goroutine — stuck forever on `<-ch`.
+
+**`TestCleanGoroutine` — PASS.** `goroutine exiting cleanly` printed — `ctx.Done()` was received, the goroutine hit `return`, count went back to baseline. No leak.
+
+---
+
 ## ✅ Day 3 Checkpoint
 
 1. What are G, M, and P in the GMP scheduler — in your own words?
